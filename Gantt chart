@@ -14,7 +14,7 @@ Order<-c("1","2","3","4","5","6","7","8")
 g.gantt <- gather(gantt, "state", "date", 8:9) %>% mutate(date = as.Date(date, "%d.%m.%y"), Lab=factor(Lab, lab1[length(lab1):1]), Data_ES=factor(Ecological_scale, ES))
 
 ggplot(g.gantt, aes(date, Scale_group, color = Ecological_scale,group=Event)) +
-  geom_line(linewidth = 10) + theme_classic()+
+  geom_line(linewidth = 10) + theme_classic()+scale_color_moma_d("ustwo")+
   labs(x="Observation date", y=NULL, title="Data collection")
 
 p <- g.gantt %>%
