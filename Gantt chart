@@ -1,0 +1,27 @@
+#Coral Bleaching Paper, Gantt chart project activity
+
+Library
+require("tidyverse")
+require("ggplot2")
+require("dplyr")
+
+gantt <- read.csv("SurveyDates.csv", h=T)
+lab1 <- c("RRAP", "EcoRRAP", "CREL", "BS","MEML", "SRL", "RL", "CW")
+ES <- c("Colony", "Ecosystem", "Reef", "Community")
+Order<-c("1","2","3","4","5","6","7","8")
+
+
+g.gantt <- gather(gantt, "state", "date", 8:9) %>% mutate(date = as.Date(date, "%d.%m.%y"), Lab=factor(Lab, lab1[length(lab1):1]), Data_ES=factor(Ecological_scale, ES))
+
+ggplot(g.gantt, aes(date, Scale_group, color = Ecological_scale,group=Event)) +
+  geom_line(linewidth = 10) + theme_classic()+
+  labs(x="Observation date", y=NULL, title="Data collection")
+
+p <- g.gantt %>%
+  mutate(name = fct_relevel(name, 
+                            "north", "north-east", "east", 
+                            "south-east", "south", "south-west", 
+                            "west", "north-west")) %>%
+  ggplot( aes(x=name, y=val)) +
+  geom_bar(stat="identity") +
+  xlab("")
